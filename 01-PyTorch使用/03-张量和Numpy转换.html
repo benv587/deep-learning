@@ -1,0 +1,966 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>3 张量和Numpy转换 - 深度学习基础V3.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-numpy" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="深度学习基础V3.0" class="md-header__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            深度学习基础V3.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3 张量和Numpy转换
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <img src="../assets/images/logo.svg" height="45px" alt="logo">
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="深度学习基础V3.0" class="md-nav__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    深度学习基础V3.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      <label class="md-nav__link" for="__nav_1">
+        第一章 PyTorch使用
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第一章 PyTorch使用" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 PyTorch使用
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-%E5%BC%A0%E9%87%8F%E7%9A%84%E5%88%9B%E5%BB%BA.html" class="md-nav__link">
+        1 张量的创建
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-%E5%BC%A0%E9%87%8F%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.html" class="md-nav__link">
+        2 张量数值计算
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          3 张量和Numpy转换
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="03-%E5%BC%A0%E9%87%8F%E5%92%8CNumpy%E8%BD%AC%E6%8D%A2.html" class="md-nav__link md-nav__link--active">
+        3 张量和Numpy转换
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-numpy" class="md-nav__link">
+    1 张量转换为 numpy 数组
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-numpy" class="md-nav__link">
+    2 numpy 转换为张量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3 标量张量和数字的转换
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4 小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-%E5%BC%A0%E9%87%8F%E6%8B%BC%E6%8E%A5%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        4 张量拼接操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-%E5%BC%A0%E9%87%8F%E7%B4%A2%E5%BC%95%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        5 张量索引操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        6 张量形状操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-%E5%BC%A0%E9%87%8F%E8%BF%90%E7%AE%97%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        7 张量运算函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E6%A8%A1%E5%9D%97.html" class="md-nav__link">
+        8 自动微分模块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="09-%E6%A1%88%E4%BE%8B-%E6%9E%84%E5%BB%BA%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html" class="md-nav__link">
+        9 案例-构建线性回归
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="10-%E6%A1%88%E4%BE%8B-%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95.html" class="md-nav__link">
+        10 模型定义方法
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        第二章 神经网络基础
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第二章 神经网络基础" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 神经网络基础
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/01-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" class="md-nav__link">
+        1 深度学习
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.html" class="md-nav__link">
+        2 神经网络前向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/03-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        3 神经网络损失函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/04-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" class="md-nav__link">
+        4 神经网络反向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/05-%E6%AD%A3%E5%88%99%E5%8C%96.html" class="md-nav__link">
+        5 神经网络正则化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/06-%E6%A1%88%E4%BE%8B-%E4%BB%B7%E6%A0%BC%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        6 案例-价格分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        第三章 卷积神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第三章 卷积神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 卷积神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-CNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 CNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E5%9B%BE%E5%83%8F%E7%9F%A5%E8%AF%86.html" class="md-nav__link">
+        2 图像基础知识
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-%E5%8D%B7%E7%A7%AF%E5%B1%82.html" class="md-nav__link">
+        3 卷积层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%B1%A0%E5%8C%96%E5%B1%82.html" class="md-nav__link">
+        4 池化层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/05-%E6%A1%88%E4%BE%8B-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        5 案例-图像分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        第四章 循环神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第四章 循环神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 循环神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-RNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 RNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E8%AF%8D%E5%B5%8C%E5%85%A5%E5%B1%82.html" class="md-nav__link">
+        2 词嵌入层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-RNN%E5%B1%82.html" class="md-nav__link">
+        3 循环网络层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%A1%88%E4%BE%8B-%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        4 案例-文本生成
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-numpy" class="md-nav__link">
+    1 张量转换为 numpy 数组
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-numpy" class="md-nav__link">
+    2 numpy 转换为张量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3 标量张量和数字的转换
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4 小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="3-numpy">3 张量和Numpy转换<a class="headerlink" href="#3-numpy" title="Permanent link">&para;</a></h1>
+<h3 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>掌握张量类型转换方法</li>
+</ul>
+<hr />
+<p>张量的类型转换也是经常使用的一种操作，是必须掌握的知识点。在本小节，我们主要学习如何将 numpy 数组和 PyTorch Tensor 的转化方法.</p>
+<h2 id="1-numpy">1 张量转换为 numpy 数组<a class="headerlink" href="#1-numpy" title="Permanent link">&para;</a></h2>
+<p>使用 Tensor.numpy 函数可以将张量转换为 ndarray 数组，但是共享内存，可以使用 copy 函数避免共享。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. 将张量转换为 numpy 数组</span>
+<span class="k">def</span> <span class="nf">test01</span><span class="p">():</span>
+
+    <span class="n">data_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="c1"># 使用张量对象中的 numpy 函数进行转换</span>
+    <span class="n">data_numpy</span> <span class="o">=</span> <span class="n">data_tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data_numpy</span><span class="p">))</span>
+
+    <span class="c1"># 注意: data_tensor 和 data_numpy 共享内存</span>
+    <span class="c1"># 修改其中的一个，另外一个也会发生改变</span>
+    <span class="c1"># data_tensor[0] = 100</span>
+    <span class="n">data_numpy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_numpy</span><span class="p">)</span>
+
+
+<span class="c1"># 2. 对象拷贝避免共享内存</span>
+<span class="k">def</span> <span class="nf">test02</span><span class="p">():</span>
+
+    <span class="n">data_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="c1"># 使用张量对象中的 numpy 函数进行转换</span>
+    <span class="n">data_numpy</span> <span class="o">=</span> <span class="n">data_tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data_numpy</span><span class="p">))</span>
+
+    <span class="c1"># 注意: data_tensor 和 data_numpy 共享内存</span>
+    <span class="c1"># 修改其中的一个，另外一个也会发生改变</span>
+    <span class="c1"># data_tensor[0] = 100</span>
+    <span class="n">data_numpy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_numpy</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="2-numpy">2 numpy 转换为张量<a class="headerlink" href="#2-numpy" title="Permanent link">&para;</a></h2>
+<ol>
+<li>使用 from_numpy 可以将 ndarray 数组转换为 Tensor，默认共享内存，使用 copy 函数避免共享。</li>
+<li>使用 torch.tensor 可以将 ndarray 数组转换为 Tensor，默认不共享内存。</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. 使用 from_numpy 函数</span>
+<span class="k">def</span> <span class="nf">test01</span><span class="p">():</span>
+
+    <span class="n">data_numpy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="c1"># 将 numpy 数组转换为张量类型</span>
+    <span class="c1"># 1. from_numpy</span>
+    <span class="c1"># 2. torch.tensor(ndarray)</span>
+
+    <span class="c1"># 浅拷贝</span>
+    <span class="n">data_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">data_numpy</span><span class="p">)</span>
+
+    <span class="c1"># nunpy 和 tensor 共享内存</span>
+    <span class="c1"># data_numpy[0] = 100</span>
+    <span class="n">data_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_numpy</span><span class="p">)</span>
+
+
+<span class="c1"># 2. 使用 torch.tensor 函数</span>
+<span class="k">def</span> <span class="nf">test02</span><span class="p">():</span>
+
+    <span class="n">data_numpy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+
+    <span class="n">data_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">data_numpy</span><span class="p">)</span>
+
+    <span class="c1"># nunpy 和 tensor 不共享内存</span>
+    <span class="c1"># data_numpy[0] = 100</span>
+    <span class="n">data_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_numpy</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="3">3 标量张量和数字的转换<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>对于只有一个元素的张量，使用 item 方法将该值从张量中提取出来。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 3. 标量张量和数字的转换</span>
+<span class="k">def</span> <span class="nf">test03</span><span class="p">():</span>
+
+    <span class="c1"># 当张量只包含一个元素时, 可以通过 item 函数提取出该值</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">30</span><span class="p">,])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">test03</span><span class="p">()</span>
+</code></pre></div>
+<p>程序输出结果:</p>
+<div class="highlight"><pre><span></span><code><span class="mi">30</span>
+<span class="mi">30</span>
+</code></pre></div>
+<h2 id="4">4 小结<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>在本小节中, 我们主要学习了 numpy 和 tensor 互相转换的规则, 以及标量张量与数值之间的转换规则。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="02-%E5%BC%A0%E9%87%8F%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 2 张量数值计算" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              2 张量数值计算
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="04-%E5%BC%A0%E9%87%8F%E6%8B%BC%E6%8E%A5%E6%93%8D%E4%BD%9C.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 4 张量拼接操作" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              4 张量拼接操作
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+        <script src="../js/extra.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,911 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>5 神经网络正则化 - 深度学习基础V3.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="深度学习基础V3.0" class="md-header__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            深度学习基础V3.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5 神经网络正则化
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <img src="../assets/images/logo.svg" height="45px" alt="logo">
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="深度学习基础V3.0" class="md-nav__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    深度学习基础V3.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        第一章 PyTorch使用
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第一章 PyTorch使用" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 PyTorch使用
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/01-%E5%BC%A0%E9%87%8F%E7%9A%84%E5%88%9B%E5%BB%BA.html" class="md-nav__link">
+        1 张量的创建
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/02-%E5%BC%A0%E9%87%8F%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.html" class="md-nav__link">
+        2 张量数值计算
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/03-%E5%BC%A0%E9%87%8F%E5%92%8CNumpy%E8%BD%AC%E6%8D%A2.html" class="md-nav__link">
+        3 张量和Numpy转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/04-%E5%BC%A0%E9%87%8F%E6%8B%BC%E6%8E%A5%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        4 张量拼接操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/05-%E5%BC%A0%E9%87%8F%E7%B4%A2%E5%BC%95%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        5 张量索引操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/06-%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        6 张量形状操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/07-%E5%BC%A0%E9%87%8F%E8%BF%90%E7%AE%97%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        7 张量运算函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/08-%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E6%A8%A1%E5%9D%97.html" class="md-nav__link">
+        8 自动微分模块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/09-%E6%A1%88%E4%BE%8B-%E6%9E%84%E5%BB%BA%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html" class="md-nav__link">
+        9 案例-构建线性回归
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/10-%E6%A1%88%E4%BE%8B-%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95.html" class="md-nav__link">
+        10 模型定义方法
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        第二章 神经网络基础
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第二章 神经网络基础" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 神经网络基础
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" class="md-nav__link">
+        1 深度学习
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.html" class="md-nav__link">
+        2 神经网络前向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        3 神经网络损失函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" class="md-nav__link">
+        4 神经网络反向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          5 神经网络正则化
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="05-%E6%AD%A3%E5%88%99%E5%8C%96.html" class="md-nav__link md-nav__link--active">
+        5 神经网络正则化
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-dropout" class="md-nav__link">
+    1 Dropout正则化
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-bn" class="md-nav__link">
+    2 批量归一化(BN层)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3 小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-%E6%A1%88%E4%BE%8B-%E4%BB%B7%E6%A0%BC%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        6 案例-价格分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        第三章 卷积神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第三章 卷积神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 卷积神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-CNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 CNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E5%9B%BE%E5%83%8F%E7%9F%A5%E8%AF%86.html" class="md-nav__link">
+        2 图像基础知识
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-%E5%8D%B7%E7%A7%AF%E5%B1%82.html" class="md-nav__link">
+        3 卷积层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%B1%A0%E5%8C%96%E5%B1%82.html" class="md-nav__link">
+        4 池化层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/05-%E6%A1%88%E4%BE%8B-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        5 案例-图像分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        第四章 循环神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第四章 循环神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 循环神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-RNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 RNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E8%AF%8D%E5%B5%8C%E5%85%A5%E5%B1%82.html" class="md-nav__link">
+        2 词嵌入层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-RNN%E5%B1%82.html" class="md-nav__link">
+        3 循环网络层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%A1%88%E4%BE%8B-%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        4 案例-文本生成
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-dropout" class="md-nav__link">
+    1 Dropout正则化
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-bn" class="md-nav__link">
+    2 批量归一化(BN层)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3 小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="5">5 神经网络正则化<a class="headerlink" href="#5" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>知道正则化的作用</li>
+<li>掌握随机失活DropOut策略</li>
+<li>知道BN层的作用</li>
+</ul>
+<hr />
+<p><img alt="05-01" src="assets/05-01.png" /></p>
+<p>在设计机器学习算法时不仅要求在训练集上误差小，而且希望在新样本上的泛化能力强。许多机器学习算法都采用相关的策略来减小测试误差，这些策略被统称为正则化。因为神经网络的强大的表示能力经常遇到过拟合，所以需要使用不同形式的正则化策略。</p>
+<p>正则化通过对算法的修改来减少泛化误差，目前在深度学习中使用较多的策略有参数范数惩罚，提前终止，DropOut等，接下来我们对其进行详细的介绍。</p>
+<h2 id="1-dropout">1 Dropout正则化<a class="headerlink" href="#1-dropout" title="Permanent link">&para;</a></h2>
+<hr />
+<p>在训深层练神经网络时，由于模型参数较多，在数据量不足的情况下，很容易过拟合。Dropout，中文是随机失活，是一个简单又机器有效的正则化方法。</p>
+<p><img alt="image-20220517141847967" src="assets/image-20220517141847967.png" /></p>
+<ul>
+<li>在训练过程中，Dropout的实现是让神经元以超参数p的概率停止工作或者激活被置为0,未被置为0的进行缩放，缩放比例为1/(1-p)。训练过程可以认为是对完整的神经网络的一些子集进行训练，每次基于输入数据只更新子网络的参数。</li>
+<li>在测试过程中，随机失活不起作用，最后的输出结果要乘以P。</li>
+</ul>
+<p>我们通过一段代码观察下dropout的效果：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="c1"># 初始化随机失活层</span>
+    <span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+    <span class="c1"># 初始化输入数据:表示某一层的weight信息</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;未失活FC层的输出结果：</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">=</span>  <span class="n">dropout</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;失活后FC层的输出结果：</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">test</span><span class="p">()</span>
+</code></pre></div>
+<p>程序输出结果：</p>
+<div class="highlight"><pre><span></span><code><span class="n">未失活FC层的输出结果</span><span class="err">：</span>
+ <span class="n">tensor</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.8369</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.5720</span><span class="p">,</span>  <span class="mf">0.2258</span><span class="p">,</span>  <span class="mf">3.4256</span><span class="p">,</span>  <span class="mf">2.1919</span><span class="p">]],</span>
+       <span class="n">grad_fn</span><span class="o">=&lt;</span><span class="n">AddmmBackward0</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="n">失活后FC层的输出结果</span><span class="err">：</span>
+ <span class="n">tensor</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.3949</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.2866</span><span class="p">,</span>  <span class="mf">0.3763</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="p">,</span>  <span class="mf">3.6531</span><span class="p">]],</span> <span class="n">grad_fn</span><span class="o">=&lt;</span><span class="n">MulBackward0</span><span class="o">&gt;</span><span class="p">)</span>
+</code></pre></div>
+<p>上述代码将 Dropout 层的概率 p 设置为 0.4，此时经过 Dropout 层计算的张量中就出现了很多 0 , 未变为0的按照（1/(1-0.4)）进行处理。</p>
+<h2 id="2-bn">2 批量归一化(BN层)<a class="headerlink" href="#2-bn" title="Permanent link">&para;</a></h2>
+<p>在神经网络的训练过程中，流经网络的数据都是一个 batch，每个batch 之间的数据分布变化非常剧烈，这就使得网络参数频繁的进行大的调整以适应流经网络的不同分布的数据，给模型训练带来非常大的不稳定性，使得模型难以收敛。如果我们对每一个batch 的数据进行标准化之后，数据分布就变得稳定，参数的梯度变化也变得稳定，有助于加快模型的收敛。</p>
+<p><img alt="image-20220517143935599" src="assets/image-20220517143935599.png" /></p>
+<p>写成公式如下所示：</p>
+<p><img src='assets/48.png' /></p>
+<ol>
+<li>λ 和 β 是可学习的参数，它相当于对标准化后的值做了一个线性变换，λ 为系数，β 为偏置；</li>
+<li>eps 通常指为 1e-5，避免分母为 0；</li>
+<li>E(x) 表示变量的均值；</li>
+<li>Var(x) 表示变量的方差；</li>
+</ol>
+<p>批量归一化层在计算机视觉领域使用较多，具体使用方法我们到后面在给大家进行介绍。</p>
+<h2 id="3">3 小结<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>知道正则化的作用</li>
+<li>掌握随机失活DropOut策略</li>
+<li>知道BN层的作用</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="04-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 4 神经网络反向传播" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              4 神经网络反向传播
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="06-%E6%A1%88%E4%BE%8B-%E4%BB%B7%E6%A0%BC%E5%88%86%E7%B1%BB.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 6 案例-价格分类" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              6 案例-价格分类
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+        <script src="../js/extra.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

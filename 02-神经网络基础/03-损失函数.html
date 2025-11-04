@@ -1,0 +1,1160 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>3 神经网络损失函数 - 深度学习基础V3.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="深度学习基础V3.0" class="md-header__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            深度学习基础V3.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3 神经网络损失函数
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <img src="../assets/images/logo.svg" height="45px" alt="logo">
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="深度学习基础V3.0" class="md-nav__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    深度学习基础V3.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        第一章 PyTorch使用
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第一章 PyTorch使用" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 PyTorch使用
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/01-%E5%BC%A0%E9%87%8F%E7%9A%84%E5%88%9B%E5%BB%BA.html" class="md-nav__link">
+        1 张量的创建
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/02-%E5%BC%A0%E9%87%8F%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.html" class="md-nav__link">
+        2 张量数值计算
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/03-%E5%BC%A0%E9%87%8F%E5%92%8CNumpy%E8%BD%AC%E6%8D%A2.html" class="md-nav__link">
+        3 张量和Numpy转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/04-%E5%BC%A0%E9%87%8F%E6%8B%BC%E6%8E%A5%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        4 张量拼接操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/05-%E5%BC%A0%E9%87%8F%E7%B4%A2%E5%BC%95%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        5 张量索引操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/06-%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        6 张量形状操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/07-%E5%BC%A0%E9%87%8F%E8%BF%90%E7%AE%97%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        7 张量运算函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/08-%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E6%A8%A1%E5%9D%97.html" class="md-nav__link">
+        8 自动微分模块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/09-%E6%A1%88%E4%BE%8B-%E6%9E%84%E5%BB%BA%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html" class="md-nav__link">
+        9 案例-构建线性回归
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/10-%E6%A1%88%E4%BE%8B-%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95.html" class="md-nav__link">
+        10 模型定义方法
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        第二章 神经网络基础
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第二章 神经网络基础" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 神经网络基础
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" class="md-nav__link">
+        1 深度学习
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.html" class="md-nav__link">
+        2 神经网络前向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          3 神经网络损失函数
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="03-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" class="md-nav__link md-nav__link--active">
+        3 神经网络损失函数
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1 分类任务
+  </a>
+  
+    <nav class="md-nav" aria-label="1 分类任务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 多分类任务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 二分类任务
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2 回归任务
+  </a>
+  
+    <nav class="md-nav" aria-label="2 回归任务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-mae" class="md-nav__link">
+    2.1 MAE损失
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-mse" class="md-nav__link">
+    2.2 MSE损失
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-smooth-l1" class="md-nav__link">
+    2.3 smooth L1 损失
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    3 小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" class="md-nav__link">
+        4 神经网络反向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-%E6%AD%A3%E5%88%99%E5%8C%96.html" class="md-nav__link">
+        5 神经网络正则化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-%E6%A1%88%E4%BE%8B-%E4%BB%B7%E6%A0%BC%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        6 案例-价格分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        第三章 卷积神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第三章 卷积神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 卷积神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-CNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 CNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E5%9B%BE%E5%83%8F%E7%9F%A5%E8%AF%86.html" class="md-nav__link">
+        2 图像基础知识
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-%E5%8D%B7%E7%A7%AF%E5%B1%82.html" class="md-nav__link">
+        3 卷积层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%B1%A0%E5%8C%96%E5%B1%82.html" class="md-nav__link">
+        4 池化层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/05-%E6%A1%88%E4%BE%8B-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        5 案例-图像分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        第四章 循环神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第四章 循环神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 循环神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-RNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 RNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E8%AF%8D%E5%B5%8C%E5%85%A5%E5%B1%82.html" class="md-nav__link">
+        2 词嵌入层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-RNN%E5%B1%82.html" class="md-nav__link">
+        3 循环网络层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%A1%88%E4%BE%8B-%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        4 案例-文本生成
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1 分类任务
+  </a>
+  
+    <nav class="md-nav" aria-label="1 分类任务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 多分类任务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 二分类任务
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2 回归任务
+  </a>
+  
+    <nav class="md-nav" aria-label="2 回归任务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-mae" class="md-nav__link">
+    2.1 MAE损失
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-mse" class="md-nav__link">
+    2.2 MSE损失
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-smooth-l1" class="md-nav__link">
+    2.3 smooth L1 损失
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    3 小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="3">3 神经网络损失函数<a class="headerlink" href="#3" title="Permanent link">&para;</a></h1>
+<ul>
+<li>学习目标</li>
+<li>知道分类任务的损失函数</li>
+<li>知道回归任务的损失函数</li>
+</ul>
+<hr />
+<p><img alt="image-20200730153842351" src="assets/03-1.png" /></p>
+<p>在深度学习中, 损失函数是用来衡量模型参数的质量的函数, 衡量的方式是比较网络输出和真实输出的差异，损失函数在不同的文献中名称是不一样的，主要有以下几种命名方式：</p>
+<p><img src="assets/03-2.png" alt="image-20200730154850183" style="zoom:50%;" /></p>
+<h2 id="1">1 分类任务<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>在深度学习的分类任务中使用最多的是交叉熵损失函数，所以在这里我们着重介绍这种损失函数。</p>
+<h3 id="11">1.1 多分类任务<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<p>在多分类任务通常使用softmax将logits转换为概率的形式，所以多分类的交叉熵损失也叫做softmax损失，它的计算方法是：</p>
+<p><img src="assets/03-3.png" alt="image-20200730161303768" style="zoom:50%;" /></p>
+<p>其中，y是样本x属于某一个类别的真实概率，而f(x)是样本属于某一类别的预测分数，S是softmax函数，L用来衡量p,q之间差异性的损失结果。</p>
+<p>例子：</p>
+<p><img src="assets/03-4.png" alt="image-20200730160805389" style="zoom: 67%;" /></p>
+<p>上图中的交叉熵损失为：</p>
+<p><img alt="image-20200730161024749" src="assets/03-5.png" /></p>
+<p>从概率角度理解，我们的目的是最小化正确类别所对应的预测概率的对数的负值，如下图所示：</p>
+<p><img src="assets/03-6.png" alt="image-20200730161746110" style="zoom:67%;" /></p>
+<p>在pytorch中使用nn.CrossEntropyLoss()实现或者nn.NLLLoss()，如下所示：</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dm01_test_CrossEntropyLoss</span><span class="p">():</span>
+
+    <span class="c1"># 1 交叉熵损失nn.CrossEntropyLoss() 与LogSoftmax()与nn.NLLLoss()相结合进行交叉熵损失计算</span>
+    <span class="c1">#   - 对预测值先进行softmax，然后再log；最后再调用nn.NLLLoss()</span>
+    <span class="c1">#   - 对于nn.CrossEntropyLoss来说，损失函数内部自带softmax，所以不需要人为额外在上一步执行softmax操作</span>
+
+    <span class="c1"># 设置真实值和预测值</span>
+    <span class="c1"># 目标值（标签）编码分类：（label encode标签编码， one-hotencode独热编码）</span>
+    <span class="c1"># y_true = torch.tensor([[0, 1, 0], [0, 0, 1]], dtype=torch.long)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.04</span><span class="p">,</span> <span class="mf">1.95</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y_true---&gt;&#39;</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_true</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y_pred---&gt;&#39;</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># 实例化交叉熵损失</span>
+    <span class="n">loss1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>  <span class="c1"># 默认求平均损失</span>
+    <span class="c1"># loss1 = nn.CrossEntropyLoss(reduction=&#39;sum&#39;)</span>
+    <span class="c1"># 计算损失结果</span>
+    <span class="n">my_loss1</span> <span class="o">=</span> <span class="n">loss1</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nn.CrossEntropyLoss(): my_loss1---&gt;&#39;</span><span class="p">,</span> <span class="n">my_loss1</span><span class="p">)</span>
+
+    <span class="c1"># 2 nn.NLLLoss()</span>
+    <span class="c1"># 实例化交叉熵损失：仅仅实现负号的功能</span>
+    <span class="n">loss2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">NLLLoss</span><span class="p">()</span>
+    <span class="c1"># loss2 = nn.NLLLoss(reduction=&#39;sum&#39;)</span>
+    <span class="c1"># 计算损失结果</span>
+    <span class="n">my_loss2</span> <span class="o">=</span> <span class="n">loss2</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>  <span class="n">y_true</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nn.NLLLoss(): my_loss2---&gt;&#39;</span><span class="p">,</span> <span class="n">my_loss2</span><span class="p">)</span>
+
+    <span class="c1"># 3 手工验算</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="c1"># tensor([[0.2245, 0.5577, 0.2178],</span>
+    <span class="c1">#         [0.2491, 0.5017, 0.2491]])</span>
+
+    <span class="c1"># 手工验证1 : log以e为底 不是log以10为底</span>
+    <span class="c1"># -( (0*log0.2245 + 1*log0.5577 + 0*log0.2178) + (0*log0.2491 + 0*log0.5017 + 1*log0.2491) )</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="o">-</span> <span class="p">((</span><span class="mi">0</span> <span class="o">*</span> <span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.2245</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.5577</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.2178</span><span class="p">))</span> <span class="o">+</span> \
+           <span class="p">(</span><span class="mi">0</span> <span class="o">*</span> <span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.2491</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.5017</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.2491</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">手工验证1 损失a---&gt;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="s1">&#39;log以e为底&#39;</span><span class="p">)</span>  <span class="c1"># 0.4620</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">手工验证1 平均损失a---&gt;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;log以e为底&#39;</span><span class="p">)</span>  <span class="c1"># 0.4620</span>
+</code></pre></div>
+<p>结果为：</p>
+<div class="highlight"><pre><span></span><code><span class="n">y_true</span><span class="o">---&gt;</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">y_pred</span><span class="o">---&gt;</span> <span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0400</span><span class="p">,</span> <span class="mf">1.9500</span><span class="p">,</span> <span class="mf">1.0100</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">1.1000</span><span class="p">,</span> <span class="mf">1.8000</span><span class="p">,</span> <span class="mf">1.1000</span><span class="p">]])</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">():</span> <span class="n">my_loss1</span><span class="o">---&gt;</span> <span class="mf">0.98685086</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">NLLLoss</span><span class="p">():</span> <span class="n">my_loss2</span><span class="o">---&gt;</span> <span class="mf">0.98685086</span>
+<span class="o">--------------------------------------------------</span>
+<span class="n">tensor</span><span class="p">([[</span><span class="mf">0.2245</span><span class="p">,</span> <span class="mf">0.5577</span><span class="p">,</span> <span class="mf">0.2178</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.2491</span><span class="p">,</span> <span class="mf">0.5017</span><span class="p">,</span> <span class="mf">0.2491</span><span class="p">]])</span>
+
+<span class="n">手工验证1</span> <span class="n">损失a</span><span class="o">---&gt;</span> <span class="mf">1.9738349523006313</span> <span class="n">log以e为底</span>
+
+<span class="n">手工验证1</span> <span class="n">平均损失a</span><span class="o">/</span><span class="mi">2</span><span class="o">---&gt;</span> <span class="mf">0.9869174761503157</span> <span class="n">log以e为底</span>
+<span class="n">损失函数</span> <span class="n">End</span>
+</code></pre></div>
+<h3 id="12">1.2 二分类任务<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<p>在处理二分类任务时，我们不在使用softmax激活函数，而是使用sigmoid激活函数，那损失函数也相应的进行调整，使用二分类的交叉熵损失函数：</p>
+<p><img alt="image-20200730162332710" src="assets/03-7.png" /></p>
+<p>其中，y是样本x属于某一个类别的真实概率，而y^是样本属于某一类别的预测概率，L用来衡量真实值与预测值之间差异性的损失结果。</p>
+<p>在pytorch中实现时使用nn.BCELoss() 或者 nn.BCEWithLogitsLoss()，如下所示演示nn.BCELoss()：</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dm02_test_BCELoss</span><span class="p">():</span>
+
+    <span class="c1"># 1 设置真实值和预测值</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.6901</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5459</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2469</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="c1"># 2 实例化二分类交叉熵损失</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">()</span>
+
+    <span class="c1"># 3 因是一个概率分布，在数据输入损失函数之前呢，需要经过一下Sigmoid来把输出值变成0~1之间</span>
+    <span class="n">y_sigmoide_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span> <span class="c1"># 注意 使用sigmoid, 不是softmax</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y_sigmoide_pred---&gt;&#39;</span><span class="p">,</span> <span class="n">y_sigmoide_pred</span><span class="p">,</span> <span class="n">y_sigmoide_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;loss_input target---&gt;&#39;</span><span class="p">,</span> <span class="n">y_sigmoide_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_true</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># 4 计算损失</span>
+    <span class="n">my_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">y_sigmoide_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;my_loss---&gt;&#39;</span><span class="p">,</span> <span class="n">my_loss</span><span class="p">)</span>
+</code></pre></div>
+<p>结果为：</p>
+<div class="highlight"><pre><span></span><code><span class="n">y_sigmoide_pred</span><span class="o">---&gt;</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.8442</span><span class="p">,</span> <span class="mf">0.3668</span><span class="p">,</span> <span class="mf">0.4386</span><span class="p">],</span> <span class="n">grad_fn</span><span class="o">=&lt;</span><span class="n">SigmoidBackward</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">loss_input</span> <span class="n">target</span><span class="o">---&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">my_loss</span><span class="o">---&gt;</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">1.1465</span><span class="p">,</span> <span class="n">grad_fn</span><span class="o">=&lt;</span><span class="n">BinaryCrossEntropyBackward</span><span class="o">&gt;</span><span class="p">)</span>
+</code></pre></div>
+<p>如下所示，演示nn.BCEWithLogitsLoss()</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dm03_test_BCEWithLogitsLoss</span><span class="p">():</span>
+
+    <span class="c1"># 1 设置真实值和预测值</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.6901</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5459</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2469</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="c1"># 2 实例化二分类交叉熵损失</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()</span>
+
+    <span class="c1"># 3 计算损失 不需要再对y_pred加入Sigmoid函数</span>
+    <span class="n">my_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;my_loss---&gt;&#39;</span><span class="p">,</span> <span class="n">my_loss</span><span class="p">)</span>
+
+    <span class="c1"># 4 手工验证</span>
+    <span class="c1"># loss = - ylog(y^) - (1-y)log(1-y^)</span>
+    <span class="n">a1</span>  <span class="o">=</span> <span class="o">-</span><span class="mi">0</span><span class="o">*</span><span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.8442</span><span class="p">)</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.8442</span><span class="p">)</span> \
+          <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.3668</span><span class="p">)</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.3668</span><span class="p">)</span> \
+          <span class="o">-</span><span class="mi">0</span><span class="o">*</span><span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.4386</span><span class="p">)</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">F</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.4386</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a1---&gt;&#39;</span><span class="p">,</span> <span class="n">a1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;三个样本，a1/3---&gt;&#39;</span><span class="p">,</span> <span class="n">a1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<p>结果为：</p>
+<div class="highlight"><pre><span></span><code><span class="n">my_loss</span><span class="o">---&gt;</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">1.1465</span><span class="p">,</span> <span class="n">grad_fn</span><span class="o">=&lt;</span><span class="n">BinaryCrossEntropyWithLogitsBackward</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="n">a1</span><span class="o">---&gt;</span> <span class="mf">3.4394422991996714</span>
+<span class="n">三个样本</span><span class="err">，</span><span class="n">a1</span><span class="o">/</span><span class="mi">3</span><span class="o">---&gt;</span> <span class="mf">1.1464807663998904</span>
+<span class="n">损失函数</span> <span class="n">End</span>
+</code></pre></div>
+<h2 id="2">2 回归任务<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>回归任务中常用的损失函数有以下几种：</p>
+<h3 id="21-mae">2.1 MAE损失<a class="headerlink" href="#21-mae" title="Permanent link">&para;</a></h3>
+<p>Mean absolute loss(MAE)也被称为L1 Loss，是以绝对误差作为距离：</p>
+<p><img alt="image-20200730165058491" src="assets/03-8.png" /></p>
+<p>曲线如下图所示：</p>
+<p><img alt="image-20200730165142553" src="assets/03-9.png" /></p>
+<p>特点是：由于L1 loss具有稀疏性，为了惩罚较大的值，因此常常将其作为正则项添加到其他loss中作为约束。L1 loss的最大问题是梯度在零点不平滑，导致会跳过极小值。</p>
+<p>在pytorch中使用nn.L1Loss()实现，如下所示：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># APi功能 计算算inputs与target之差的绝对值</span>
+<span class="c1"># 主要参数: reduction 计算模式可为none、sum、mean</span>
+    <span class="c1"># none: 逐个元素计算</span>
+    <span class="c1"># sum: 所有元素求和, 返回标量</span>
+    <span class="c1"># mane: 加权平均, 返回标量</span>
+<span class="k">def</span> <span class="nf">dm05_test_maeloss</span><span class="p">():</span>
+
+    <span class="c1"># 1 设置真实值和预测值</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="c1"># 2 实例MAE损失对象</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">L1Loss</span><span class="p">()</span>
+
+    <span class="c1"># 3 计算损失</span>
+    <span class="n">my_loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+    <span class="n">my_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;myloss---&gt;&#39;</span><span class="p">,</span> <span class="n">my_loss</span><span class="p">)</span>
+</code></pre></div>
+<p>结果为：</p>
+<div class="highlight"><pre><span></span><code>myloss---&gt; tensor(0.7000, grad_fn=&lt;L1LossBackward&gt;)
+</code></pre></div>
+<h3 id="22-mse">2.2 MSE损失<a class="headerlink" href="#22-mse" title="Permanent link">&para;</a></h3>
+<p>Mean Squared Loss/ Quadratic Loss(MSE loss)也被称为L2 loss，或欧氏距离，它以误差的平方和的均值作为距离：</p>
+<p><img alt="image-20200730165213969" src="assets/03-10.png" /></p>
+<p>曲线如下图所示：</p>
+<p><img alt="image-20200730165404271" src="assets/03-11.png" /></p>
+<p>特点是：L2 loss也常常作为正则项。当预测值与目标值相差很大时, 梯度容易爆炸。</p>
+<p>在pytorch中通过nn.MSELoss()实现：</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dm06_test_mseloss</span><span class="p">():</span>
+
+    <span class="c1"># 1 设置真实值和预测值</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="c1"># 2 实例MAE损失对象</span>
+    <span class="n">loss</span> <span class="o">=</span>  <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+
+    <span class="c1"># 3 计算损失</span>
+    <span class="n">my_loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+    <span class="n">my_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;myloss---&gt;&#39;</span><span class="p">,</span> <span class="n">my_loss</span><span class="p">)</span>
+</code></pre></div>
+<p>结果为：</p>
+<div class="highlight"><pre><span></span><code>myloss---&gt; tensor(0.6700, grad_fn=&lt;MseLossBackward&gt;)
+</code></pre></div>
+<h3 id="23-smooth-l1">2.3 smooth L1 损失<a class="headerlink" href="#23-smooth-l1" title="Permanent link">&para;</a></h3>
+<p>Smooth L1损失函数如下式所示：</p>
+<p><img alt="image-20200730170635889" src="assets/03-12.png" /></p>
+<p>其中：𝑥=f(x)−y 为真实值和预测值的差值。</p>
+<p><img alt="image-20200730171108887" src="assets/03-13.png" /></p>
+<p>从上图中可以看出，该函数实际上就是一个分段函数，在[-1,1]之间实际上就是L2损失，这样解决了L1的不光滑问题，在[-1,1]区间外，实际上就是L1损失，这样就解决了离群点梯度爆炸的问题。通常在目标检测中使用该损失函数。</p>
+<p>在pytorch中使用nn.SmoothL1Loss()计算该损失，如下所示：</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dm07_test_smoothL1</span><span class="p">():</span>
+
+    <span class="c1"># 1 设置真实值和预测值</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span> <span class="p">([[</span><span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">]],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+    <span class="c1"># 2 实例smmothL1损失对象</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">SmoothL1Loss</span><span class="p">()</span>
+
+    <span class="c1"># 3 计算损失</span>
+    <span class="n">my_loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+    <span class="c1"># my_loss.backward()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;myloss---&gt;&#39;</span><span class="p">,</span> <span class="n">my_loss</span><span class="p">)</span>
+
+    <span class="c1"># 手工验证：</span>
+    <span class="c1"># 总损失：( 0.5*(0.6-0)^2 + 0.5*(0.4-1)^2 ) = (0.18+0.18) = 0.36</span>
+    <span class="n">mysquare</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">square</span><span class="p">(</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span> <span class="p">)</span> <span class="o">*</span><span class="mf">0.5</span>
+    <span class="n">my_loss2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mysquare</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;2个样本，手工计算损失my_loss2---&gt;&#39;</span><span class="p">,</span> <span class="n">my_loss2</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</code></pre></div>
+<p>结果：</p>
+<div class="highlight"><pre><span></span><code>2个样本，手工计算损失my_loss2---&gt; 0.18
+</code></pre></div>
+<hr />
+<h2 id="3_1">3 小结<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>知道分类任务的损失函数</li>
+</ul>
+<p>多分类的交叉熵损失函数和二分类的交叉熵损失函数</p>
+<ul>
+<li>知道回归任务的损失函数</li>
+</ul>
+<p>MAE，MSE，smooth L1损失函数</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 2 神经网络前向传播" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              2 神经网络前向传播
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="04-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 4 神经网络反向传播" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              4 神经网络反向传播
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+        <script src="../js/extra.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

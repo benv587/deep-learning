@@ -1,0 +1,1173 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>4 案例-文本生成 - 深度学习基础V3.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#4-" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="深度学习基础V3.0" class="md-header__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            深度学习基础V3.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4 案例-文本生成
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <img src="../assets/images/logo.svg" height="45px" alt="logo">
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="深度学习基础V3.0" class="md-nav__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    深度学习基础V3.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        第一章 PyTorch使用
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第一章 PyTorch使用" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 PyTorch使用
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/01-%E5%BC%A0%E9%87%8F%E7%9A%84%E5%88%9B%E5%BB%BA.html" class="md-nav__link">
+        1 张量的创建
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/02-%E5%BC%A0%E9%87%8F%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.html" class="md-nav__link">
+        2 张量数值计算
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/03-%E5%BC%A0%E9%87%8F%E5%92%8CNumpy%E8%BD%AC%E6%8D%A2.html" class="md-nav__link">
+        3 张量和Numpy转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/04-%E5%BC%A0%E9%87%8F%E6%8B%BC%E6%8E%A5%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        4 张量拼接操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/05-%E5%BC%A0%E9%87%8F%E7%B4%A2%E5%BC%95%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        5 张量索引操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/06-%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        6 张量形状操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/07-%E5%BC%A0%E9%87%8F%E8%BF%90%E7%AE%97%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        7 张量运算函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/08-%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E6%A8%A1%E5%9D%97.html" class="md-nav__link">
+        8 自动微分模块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/09-%E6%A1%88%E4%BE%8B-%E6%9E%84%E5%BB%BA%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html" class="md-nav__link">
+        9 案例-构建线性回归
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/10-%E6%A1%88%E4%BE%8B-%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95.html" class="md-nav__link">
+        10 模型定义方法
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        第二章 神经网络基础
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第二章 神经网络基础" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 神经网络基础
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/01-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" class="md-nav__link">
+        1 深度学习
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.html" class="md-nav__link">
+        2 神经网络前向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/03-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        3 神经网络损失函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/04-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" class="md-nav__link">
+        4 神经网络反向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/05-%E6%AD%A3%E5%88%99%E5%8C%96.html" class="md-nav__link">
+        5 神经网络正则化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/06-%E6%A1%88%E4%BE%8B-%E4%BB%B7%E6%A0%BC%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        6 案例-价格分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        第三章 卷积神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第三章 卷积神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 卷积神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-CNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 CNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E5%9B%BE%E5%83%8F%E7%9F%A5%E8%AF%86.html" class="md-nav__link">
+        2 图像基础知识
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-%E5%8D%B7%E7%A7%AF%E5%B1%82.html" class="md-nav__link">
+        3 卷积层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%B1%A0%E5%8C%96%E5%B1%82.html" class="md-nav__link">
+        4 池化层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/05-%E6%A1%88%E4%BE%8B-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        5 案例-图像分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        第四章 循环神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第四章 循环神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 循环神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-RNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 RNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-%E8%AF%8D%E5%B5%8C%E5%85%A5%E5%B1%82.html" class="md-nav__link">
+        2 词嵌入层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-RNN%E5%B1%82.html" class="md-nav__link">
+        3 循环网络层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          4 案例-文本生成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="04-%E6%A1%88%E4%BE%8B-%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90.html" class="md-nav__link md-nav__link--active">
+        4 案例-文本生成
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1 构词词典
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2 构建数据集对象
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3 构建网络模型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4 构建训练函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5 构建预测函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    6 小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1 构词词典
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2 构建数据集对象
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3 构建网络模型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4 构建训练函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5 构建预测函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    6 小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="4-">4 案例-文本生成<a class="headerlink" href="#4-" title="Permanent link">&para;</a></h1>
+<h3 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>掌握文本生成模型构建流程</li>
+</ul>
+<hr />
+<p>文本生成任务是一种常见的自然语言处理任务，输入一个开始词能够预测出后面的词序列。本案例将会使用循环神经网络来实现周杰伦歌词生成任务。</p>
+<p>数据集如下:</p>
+<div class="highlight"><pre><span></span><code><span class="n">想要有直升机</span>
+<span class="n">想要和你飞到宇宙去</span>
+<span class="n">想要和你融化在一起</span>
+<span class="n">融化在宇宙里</span>
+<span class="n">我每天每天每天在想想想想著你</span>
+<span class="n">这样的甜蜜</span>
+<span class="n">让我开始相信命运</span>
+<span class="n">感谢地心引力</span>
+<span class="n">让我碰到你</span>
+<span class="n">漂亮的让我面红的可爱女人</span>
+<span class="o">...</span>
+</code></pre></div>
+<p>数据集共有 5819 行。</p>
+<h2 id="1">1 构词词典<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>我们在进行自然语言处理任务之前，首要做的就是就是构建词表。所谓的词表就是将语料进行分词，然后给每一个词分配一个唯一的编号，便于我们送入词嵌入层。</p>
+<p>最终，我们的词典主要包含了: </p>
+<ol>
+<li>word_to_index: 存储了词到编号的映射</li>
+<li>index_to_word: 存储了编号到词的映射</li>
+</ol>
+<p>一般构建词表的流程如下:</p>
+<ol>
+<li>语料清洗, 去除不相关的内容</li>
+<li>对语料进行分词</li>
+<li>构建词表</li>
+</ol>
+<p>接下来, 我们对周杰伦歌词的语料数据按照上面的步骤构建词表。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 构建词典</span>
+<span class="k">def</span> <span class="nf">build_vocab</span><span class="p">():</span>
+
+    <span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;data/jaychou_lyrics.txt&#39;</span>
+
+
+    <span class="c1"># 1. 清洗文本</span>
+    <span class="n">clean_sentences</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">):</span>
+
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;〖韩语Rap译文〗&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="c1"># 去除中文、英文、数字、部分标点符号外的其他字符</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^\u4e00-\u9fa5 a-zA-Z0-9!?,]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="c1"># 连续空格替换成1个</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[ ]{2,}&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="c1"># 去除两侧空格、换行</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="c1"># 去除单字的行</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># 去除重复行</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">clean_sentences</span><span class="p">:</span>
+            <span class="n">clean_sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="c1"># 2. 预料分词</span>
+    <span class="n">index_to_word</span><span class="p">,</span> <span class="n">all_sentences</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">clean_sentences</span><span class="p">:</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="n">jieba</span><span class="o">.</span><span class="n">lcut</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">all_sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">index_to_word</span><span class="p">:</span>
+                <span class="n">index_to_word</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+    <span class="c1"># 词到索引映射</span>
+    <span class="n">word_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">word</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">index_to_word</span><span class="p">)}</span>
+    <span class="c1"># 词的数量</span>
+    <span class="n">word_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">index_to_word</span><span class="p">)</span>
+    <span class="c1"># 句子索引表示</span>
+    <span class="n">corpus_idx</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">all_sentences</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word_to_index</span><span class="p">[</span><span class="n">word</span><span class="p">])</span>
+        <span class="c1"># 在每行歌词之间添加空格隔开</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word_to_index</span><span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">])</span>
+        <span class="n">corpus_idx</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+
+    <span class="k">return</span> <span class="n">index_to_word</span><span class="p">,</span> <span class="n">word_to_index</span><span class="p">,</span> <span class="n">word_count</span><span class="p">,</span> <span class="n">corpus_idx</span>
+
+<span class="k">def</span> <span class="nf">test01</span><span class="p">():</span>
+
+    <span class="n">index_to_word</span><span class="p">,</span> <span class="n">word_to_index</span><span class="p">,</span> <span class="n">word_count</span><span class="p">,</span> <span class="n">corpus_idx</span> <span class="o">=</span> <span class="n">build_vocab</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">word_count</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">index_to_word</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">word_to_index</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">corpus_idx</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="2">2 构建数据集对象<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>我们在训练的时候，为了便于读取语料，并送入网络，所以我们会构建一个 Dataset 对象，并使用该对象构建 DataLoader 对象，然后对 DataLoader 对象进行迭代可以获取语料，并将其送入网络。</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LyricsDataset</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">corpus_idx</span><span class="p">,</span> <span class="n">num_chars</span><span class="p">):</span>
+        <span class="c1"># 语料数据</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corpus_idx</span> <span class="o">=</span> <span class="n">corpus_idx</span>
+        <span class="c1"># 语料长度</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_chars</span> <span class="o">=</span> <span class="n">num_chars</span>
+        <span class="c1"># 词的数量</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">corpus_idx</span><span class="p">)</span>
+        <span class="c1"># 句子数量</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">word_count</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_chars</span>
+
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+
+        <span class="c1"># 修正索引值到: [0, self.word_count - 1]</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="bp">self</span><span class="o">.</span><span class="n">word_count</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_chars</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">corpus_idx</span><span class="p">[</span><span class="n">start</span><span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_chars</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">corpus_idx</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_chars</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test02</span><span class="p">():</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">corpus_idx</span> <span class="o">=</span> <span class="n">build_vocab</span><span class="p">()</span>
+    <span class="n">lyrics</span> <span class="o">=</span> <span class="n">LyricsDataset</span><span class="p">(</span><span class="n">corpus_idx</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">lyrics_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">lyrics_dataloader</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y:&#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">break</span>
+</code></pre></div>
+<h2 id="3">3 构建网络模型<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>我们用于实现《歌词生成》的网络模型，主要包含了三个层:</p>
+<ol>
+<li>词嵌入层: 用于将语料转换为词向量</li>
+<li>循环网络层: 提取句子语义</li>
+<li>全连接层: 输出对词典中每个词的预测概率</li>
+</ol>
+<p>我们前面学习了 Dropout 层，它具有正则化作用，所以在我们的网络层中，我们会对词嵌入层、循环网络层的输出结果进行 Dropout 计算。</p>
+<p>示例代码如下:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TextGenerator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TextGenerator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># 初始化词嵌入层</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ebd</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+        <span class="c1"># 循环网络层</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">RNN</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># 输出层</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">hidden</span><span class="p">):</span>
+
+        <span class="c1"># 输出维度: (1, 5, 128)</span>
+        <span class="n">embed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ebd</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+        <span class="c1"># 正则化层</span>
+        <span class="n">embed</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">embed</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+        <span class="c1"># 修改维度: (5, 1, 128)</span>
+        <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">embed</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">hidden</span><span class="p">)</span>
+
+        <span class="c1"># 正则化层</span>
+        <span class="n">embed</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+        <span class="c1"># 输入维度: (5, 128)</span>
+        <span class="c1"># 输出维度: (5, 5682)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span>
+
+    <span class="k">def</span> <span class="nf">init_hidden</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test03</span><span class="p">():</span>
+    <span class="n">index_to_word</span><span class="p">,</span> <span class="n">word_to_index</span><span class="p">,</span> <span class="n">word_count</span><span class="p">,</span> <span class="n">corpus_idx</span> <span class="o">=</span> <span class="n">build_vocab</span><span class="p">()</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">corpus_idx</span> <span class="o">=</span> <span class="n">build_vocab</span><span class="p">()</span>
+    <span class="n">lyrics</span> <span class="o">=</span> <span class="n">LyricsDataset</span><span class="p">(</span><span class="n">corpus_idx</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">lyrics_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">TextGenerator</span><span class="p">(</span><span class="n">word_count</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">lyrics_dataloader</span><span class="p">:</span>
+        <span class="n">hidden</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hidden</span><span class="p">)</span>
+        <span class="k">break</span>
+</code></pre></div>
+<h2 id="4">4 构建训练函数<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>前面的准备工作完成之后, 我们就可以编写训练函数。训练函数主要负责编写数据迭代、送入网络、计算损失、反向传播、更新参数，其流程基本较为固定。</p>
+<p>由于我们要实现文本生成，文本生成本质上，输入一串文本，预测下一个文本，也属于分类问题，所以，我们使用多分类交叉熵损失函数。优化方法我们学习过 SGB、AdaGrad、Adam 等，在这里我们选择学习率、梯度自适应的 Adam 算法作为我们的优化方法。</p>
+<p>训练完成之后，我们使用 torch.save 方法将模型持久化存储。</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">train</span><span class="p">():</span>
+
+    <span class="c1"># 构建词典</span>
+    <span class="n">index_to_word</span><span class="p">,</span> <span class="n">word_to_index</span><span class="p">,</span> <span class="n">word_count</span><span class="p">,</span> <span class="n">corpus_idx</span> <span class="o">=</span> <span class="n">build_vocab</span><span class="p">()</span>
+    <span class="c1"># 数据集</span>
+    <span class="n">lyrics</span> <span class="o">=</span> <span class="n">LyricsDataset</span><span class="p">(</span><span class="n">corpus_idx</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+    <span class="c1"># 初始化模型</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">TextGenerator</span><span class="p">(</span><span class="n">word_count</span><span class="p">)</span>
+    <span class="c1"># 损失函数</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+    <span class="c1"># 优化方法</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+    <span class="c1"># 训练轮数</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="c1"># 迭代打印</span>
+    <span class="n">iter_num</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="c1"># 训练日志</span>
+    <span class="n">train_log</span> <span class="o">=</span> <span class="s1">&#39;lyrics_training.log&#39;</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_log</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+    <span class="c1"># 开始训练</span>
+    <span class="k">for</span> <span class="n">epoch_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">):</span>
+
+        <span class="c1"># 数据加载器</span>
+        <span class="n">lyrics_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># 训练时间</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># 迭代次数</span>
+        <span class="n">iter_num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># 训练损失</span>
+        <span class="n">total_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">lyrics_dataloader</span><span class="p">:</span>
+
+            <span class="c1"># 隐藏状态</span>
+            <span class="n">hidden</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">()</span>
+            <span class="c1"># 模型计算</span>
+            <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hidden</span><span class="p">)</span>
+            <span class="c1"># 计算损失</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+            <span class="c1"># 梯度清零</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="c1"># 反向传播</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="c1"># 参数更新</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="n">iter_num</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;epoch </span><span class="si">%3s</span><span class="s1"> loss: </span><span class="si">%.5f</span><span class="s1"> time </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> \
+                  <span class="p">(</span><span class="n">epoch_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                   <span class="n">total_loss</span> <span class="o">/</span> <span class="n">iter_num</span><span class="p">,</span>
+                   <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1"># 模型存储</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;model/lyrics_model_</span><span class="si">%d</span><span class="s1">.bin&#39;</span> <span class="o">%</span> <span class="n">epoch</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="5">5 构建预测函数<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>到了最后一步，我们从磁盘加载训练好的模型，进行预测。预测函数，输入第一个指定的词，我们将该词输入网路，预测出下一个词，再将预测的出的词再次送入网络，预测出下一个词，以此类推，知道预测出我们指定长度的内容。</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">start_word</span><span class="p">,</span> <span class="n">sentence_length</span><span class="p">):</span>
+
+    <span class="c1"># 构建词典</span>
+    <span class="n">index_to_word</span><span class="p">,</span> <span class="n">word_to_index</span><span class="p">,</span> <span class="n">word_count</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">build_vocab</span><span class="p">()</span>
+    <span class="c1"># 构建模型</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">TextGenerator</span><span class="p">(</span><span class="n">vocab_size</span><span class="o">=</span><span class="n">word_count</span><span class="p">)</span>
+    <span class="c1"># 加载参数</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;model/lyrics_model_200.bin&#39;</span><span class="p">))</span>
+
+    <span class="c1"># 隐藏状态</span>
+    <span class="n">hidden</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">init_hidden</span><span class="p">()</span>
+    <span class="c1"># 词转换为索引</span>
+    <span class="n">word_idx</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span><span class="n">start_word</span><span class="p">]</span>
+    <span class="n">generate_sentence</span> <span class="o">=</span> <span class="p">[</span><span class="n">word_idx</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sentence_length</span><span class="p">):</span>
+        <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="n">word_idx</span><span class="p">]]),</span> <span class="n">hidden</span><span class="p">)</span>
+        <span class="n">word_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">generate_sentence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word_idx</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">generate_sentence</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">index_to_word</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">predict</span><span class="p">(</span><span class="s1">&#39;分手&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</code></pre></div>
+<p>程序运行结果:</p>
+<div class="highlight"><pre><span></span><code><span class="n">分手的话像语言暴力</span> <span class="n">我已无能为力再提起</span> <span class="n">决定中断熟悉</span> <span class="n">周杰伦</span> <span class="n">周杰伦</span> <span class="n">一步两步三步四步望著天</span> <span class="n">看星星</span> <span class="n">一颗两颗三颗四颗</span> <span class="n">连成线一步两步三步四步望著天</span> <span class="n">看星星</span> <span class="n">一颗两颗三颗四颗</span> 
+</code></pre></div>
+<h2 id="6">6 小结<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>本小节，带着大家使用学习到的循环神经网络的知识，构建了一个《歌词生成》的项目，该项目的实现流程如下:</p>
+<ol>
+<li>构建词汇表</li>
+<li>构建数据对象</li>
+<li>编写网络模型</li>
+<li>编写训练函数</li>
+<li>编写预测函数</li>
+</ol>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="03-RNN%E5%B1%82.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 3 循环网络层" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              3 循环网络层
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+        <script src="../js/extra.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

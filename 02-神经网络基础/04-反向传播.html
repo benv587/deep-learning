@@ -1,0 +1,1765 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>4 神经网络反向传播 - 深度学习基础V3.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#4" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="深度学习基础V3.0" class="md-header__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            深度学习基础V3.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4 神经网络反向传播
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <img src="../assets/images/logo.svg" height="45px" alt="logo">
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="深度学习基础V3.0" class="md-nav__button md-logo" aria-label="深度学习基础V3.0" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    深度学习基础V3.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        第一章 PyTorch使用
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第一章 PyTorch使用" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 PyTorch使用
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/01-%E5%BC%A0%E9%87%8F%E7%9A%84%E5%88%9B%E5%BB%BA.html" class="md-nav__link">
+        1 张量的创建
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/02-%E5%BC%A0%E9%87%8F%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97.html" class="md-nav__link">
+        2 张量数值计算
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/03-%E5%BC%A0%E9%87%8F%E5%92%8CNumpy%E8%BD%AC%E6%8D%A2.html" class="md-nav__link">
+        3 张量和Numpy转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/04-%E5%BC%A0%E9%87%8F%E6%8B%BC%E6%8E%A5%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        4 张量拼接操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/05-%E5%BC%A0%E9%87%8F%E7%B4%A2%E5%BC%95%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        5 张量索引操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/06-%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6%E6%93%8D%E4%BD%9C.html" class="md-nav__link">
+        6 张量形状操作
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/07-%E5%BC%A0%E9%87%8F%E8%BF%90%E7%AE%97%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        7 张量运算函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/08-%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E6%A8%A1%E5%9D%97.html" class="md-nav__link">
+        8 自动微分模块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/09-%E6%A1%88%E4%BE%8B-%E6%9E%84%E5%BB%BA%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html" class="md-nav__link">
+        9 案例-构建线性回归
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-PyTorch%E4%BD%BF%E7%94%A8/10-%E6%A1%88%E4%BE%8B-%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95.html" class="md-nav__link">
+        10 模型定义方法
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        第二章 神经网络基础
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第二章 神经网络基础" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 神经网络基础
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" class="md-nav__link">
+        1 深度学习
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.html" class="md-nav__link">
+        2 神经网络前向传播
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" class="md-nav__link">
+        3 神经网络损失函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          4 神经网络反向传播
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="04-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" class="md-nav__link md-nav__link--active">
+        4 神经网络反向传播
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1 梯度下降
+  </a>
+  
+    <nav class="md-nav" aria-label="1 梯度下降">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    1 梯度下降算法回顾
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bp" class="md-nav__link">
+    2 反向传播(BP算法)
+  </a>
+  
+    <nav class="md-nav" aria-label="2 反向传播(BP算法)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-" class="md-nav__link">
+    2.1 反向传播参数更新-流程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-" class="md-nav__link">
+    2.2 反向传播参数更新-代码
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3 小结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-" class="md-nav__link">
+    2 梯度下降-梯度优化方法
+  </a>
+  
+    <nav class="md-nav" aria-label="2 梯度下降-梯度优化方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    1 指数加权平均
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-momentum" class="md-nav__link">
+    2 动量算法Momentum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-adagrad" class="md-nav__link">
+    3 AdaGrad
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-rmsprop" class="md-nav__link">
+    4 RMSProp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-adam" class="md-nav__link">
+    5 Adam
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    6 小结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    3 梯度下降-学习率优化策略
+  </a>
+  
+    <nav class="md-nav" aria-label="3 梯度下降-学习率优化策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    1 为什么要进行学习率优化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2 梯度学习率调整策略
+  </a>
+  
+    <nav class="md-nav" aria-label="2 梯度学习率调整策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-_1" class="md-nav__link">
+    2.1 等间隔-调整学习率
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-_1" class="md-nav__link">
+    2.2 指定间隔-调整学习率
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-" class="md-nav__link">
+    2.3 按指数衰减-调整学习率
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-%E6%AD%A3%E5%88%99%E5%8C%96.html" class="md-nav__link">
+        5 神经网络正则化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-%E6%A1%88%E4%BE%8B-%E4%BB%B7%E6%A0%BC%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        6 案例-价格分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        第三章 卷积神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第三章 卷积神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 卷积神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-CNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 CNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E5%9B%BE%E5%83%8F%E7%9F%A5%E8%AF%86.html" class="md-nav__link">
+        2 图像基础知识
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-%E5%8D%B7%E7%A7%AF%E5%B1%82.html" class="md-nav__link">
+        3 卷积层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%B1%A0%E5%8C%96%E5%B1%82.html" class="md-nav__link">
+        4 池化层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/05-%E6%A1%88%E4%BE%8B-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB.html" class="md-nav__link">
+        5 案例-图像分类
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        第四章 循环神经网络
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="第四章 循环神经网络" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 循环神经网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/00-README.html" class="md-nav__link">
+        0 介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/01-RNN%E6%A6%82%E8%BF%B0.html" class="md-nav__link">
+        1 RNN 概述
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/02-%E8%AF%8D%E5%B5%8C%E5%85%A5%E5%B1%82.html" class="md-nav__link">
+        2 词嵌入层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/03-RNN%E5%B1%82.html" class="md-nav__link">
+        3 循环网络层
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/04-%E6%A1%88%E4%BE%8B-%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        4 案例-文本生成
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1 梯度下降
+  </a>
+  
+    <nav class="md-nav" aria-label="1 梯度下降">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    1 梯度下降算法回顾
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bp" class="md-nav__link">
+    2 反向传播(BP算法)
+  </a>
+  
+    <nav class="md-nav" aria-label="2 反向传播(BP算法)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-" class="md-nav__link">
+    2.1 反向传播参数更新-流程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-" class="md-nav__link">
+    2.2 反向传播参数更新-代码
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3 小结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-" class="md-nav__link">
+    2 梯度下降-梯度优化方法
+  </a>
+  
+    <nav class="md-nav" aria-label="2 梯度下降-梯度优化方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    1 指数加权平均
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-momentum" class="md-nav__link">
+    2 动量算法Momentum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-adagrad" class="md-nav__link">
+    3 AdaGrad
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-rmsprop" class="md-nav__link">
+    4 RMSProp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-adam" class="md-nav__link">
+    5 Adam
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    6 小结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    3 梯度下降-学习率优化策略
+  </a>
+  
+    <nav class="md-nav" aria-label="3 梯度下降-学习率优化策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    1 为什么要进行学习率优化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2 梯度学习率调整策略
+  </a>
+  
+    <nav class="md-nav" aria-label="2 梯度学习率调整策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-_1" class="md-nav__link">
+    2.1 等间隔-调整学习率
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-_1" class="md-nav__link">
+    2.2 指定间隔-调整学习率
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-" class="md-nav__link">
+    2.3 按指数衰减-调整学习率
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="4">4 神经网络反向传播<a class="headerlink" href="#4" title="Permanent link">&para;</a></h1>
+<h2 id="1">1 梯度下降<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>知道梯度下降算法</li>
+<li>知道链式法则</li>
+<li>掌握反向传播算法</li>
+</ul>
+<hr />
+<p>多层神经网络的学习能力比单层网络强得多。想要训练多层网络，需要更强大的学习算法。误差反向传播算法（Back Propagation）是其中最杰出的代表，它是目前最成功的神经网络学习算法。现实任务使用神经网络时，大多是在使用 BP 算法进行训练，值得指出的是 BP 算法不仅可用于多层前馈神经网络，还可以用于其他类型的神经网络。通常说 BP 网络时，一般是指用 BP 算法训练的多层前馈神经网络。</p>
+<p>这就需要了解两个概念：
+1. 正向传播
+2. 反向传播</p>
+<h3 id="1_1">1 梯度下降算法回顾<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<p>梯度下降法简单来说就是一种寻找使损失函数最小化的方法。大家在机器学习阶段已经学过该算法，所以我们在这里就简单的回顾下，从数学上的角度来看，梯度的方向是函数增长速度最快的方向，那么梯度的反方向就是函数减少最快的方向，所以有：</p>
+<p><img src='assets/12.png' /></p>
+<p>其中，η是学习率，如果学习率太小，那么每次训练之后得到的效果都太小，增大训练的时间成本。如果，学习率太大，那就有可能直接跳过最优解，进入无限的训练中。解决的方法就是，学习率也需要随着训练的进行而变化。</p>
+<p><img src='assets/04-05.png' /></p>
+<p>在上图中我们展示了一维和多维的损失函数，损失函数呈碗状。在训练过程中损失函数对权重的偏导数就是损失函数在该位置点的梯度。我们可以看到，沿着负梯度方向移动，就可以到达损失函数底部，从而使损失函数最小化。这种利用损失函数的梯度迭代地寻找局部最小值的过程就是梯度下降的过程。</p>
+<p>在进行模型训练时，有三个基础的概念：
+1. Epoch: 使用全部数据对模型进行以此完整训练
+2. Batch: 使用训练集中的小部分样本对模型权重进行以此反向传播的参数更新
+3. Iteration: 使用一个 Batch 数据对模型进行一次参数更新的过程</p>
+<p>实际上，梯度下降的几种方式的根本区别就在于 Batch Size不同,，如下表所示：</p>
+<p><img src='assets/13.png' /></p>
+<p>注：上表中 Mini-Batch 的 Batch 个数为 N / B + 1 是针对未整除的情况。整除则是 N / B。</p>
+<p>假设数据集有 50000 个训练样本，现在选择 Batch Size = 256 对模型进行训练。</p>
+<p>每个 Epoch 要训练的图片数量：50000
+训练集具有的 Batch 个数：50000/256+1=196
+每个 Epoch 具有的 Iteration 个数：196
+10个 Epoch 具有的 Iteration 个数：1960</p>
+<h3 id="2-bp">2 反向传播(BP算法)<a class="headerlink" href="#2-bp" title="Permanent link">&para;</a></h3>
+<p>利用反向传播算法对神经网络进行训练。该方法与梯度下降算法相结合，对网络中所有权重计算损失函数的梯度，并利用梯度值来更新权值以最小化损失函数。在介绍BP算法前，我们先看下前向传播与链式法则的内容。</p>
+<p>前向传播指的是数据输入的神经网络中，逐层向前传输，一直到运算到输出层为止。</p>
+<p><img src='assets/14.png' /></p>
+<p>在网络的训练过程中经过前向传播后得到的最终结果跟训练样本的真实值总是存在一定误差，这个误差便是损失函数。想要减小这个误差，就用损失函数 ERROR，从后往前，依次求各个参数的偏导，这就是反向传播（Back Propagation）。</p>
+<h4 id="21-">2.1 反向传播参数更新-流程<a class="headerlink" href="#21-" title="Permanent link">&para;</a></h4>
+<p>反向传播算法利用链式法则对神经网络中的各个节点的权重进行更新。我们通过一个例子来给大家介绍整个流程。</p>
+<p>输出层权重：</p>
+<p><img src="assets/image-20200731170409620.png" alt="image-20200731170409620" style="zoom:50%;" /></p>
+<p>隐藏层权重：</p>
+<p><img src="assets/image-20200731170433975.png" alt="image-20200731170433975" style="zoom:50%;" /></p>
+<p>偏置更新：</p>
+<p><img src="assets/image-20200731170452900.png" alt="image-20200731170452900" style="zoom:50%;" /></p>
+<p>【举个栗子🌰：】</p>
+<p>如下图是一个简单的神经网络用来举例：激活函数为sigmoid</p>
+<p><img src="assets/image-20210129103846076.png" alt="image-20210129103846076" style="zoom:67%;" /></p>
+<p><strong>前向传播运算</strong>：</p>
+<p><img alt="image-20210129104612230" src="assets/image-20210129104612230.png" /></p>
+<p>接下来是**反向传播**（求网络误差对各个权重参数的梯度）：</p>
+<p>我们先来求最简单的，求误差E对w5的导数。首先明确这是一个“<strong>链式法则</strong>”的求导过程，要求误差E对w5的导数，需要先求误差E对out o1的导数，再求out o1对net o1的导数，最后再求net o1对w5的导数，经过这个**链式法则**，我们就可以求出误差E对w5的导数（偏导），如下图所示：</p>
+<p><img alt="image-20210129104646474" src="assets/image-20210129104646474.png" /></p>
+<p>导数（梯度）已经计算出来了，下面就是**反向传播与参数更新过程**：</p>
+<p><img alt="image-20210129104718140" src="assets/image-20210129104718140.png" /></p>
+<p>如果要想求**误差E对w1的导数**，误差E对w1的求导路径不止一条，这会稍微复杂一点，但换汤不换药，计算过程如下所示：</p>
+<p><img alt="image-20210129104756053" src="assets/image-20210129104756053.png" /></p>
+<p>至此，**“反向传播算法”**的过程就讲完了啦！</p>
+<h4 id="22-">2.2 反向传播参数更新-代码<a class="headerlink" href="#22-" title="Permanent link">&para;</a></h4>
+<p>下面我们使用代码构建上面的网络，并进行一次正向传播和反向传播。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+
+
+<span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Net</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># 网络参数初始化</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.40</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear1</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear2</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">]])</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">]])</span>
+
+    <span class="c1"># 获得网络输出值</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="c1"># print(output)  # tensor([[0.7514, 0.7729]], grad_fn=&lt;SigmoidBackward&gt;)</span>
+
+    <span class="c1"># 计算误差</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">output</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="c1"># print(loss)  # tensor(0.2984, grad_fn=&lt;DivBackward0&gt;)</span>
+
+    <span class="c1"># 优化方法</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="c1"># 梯度清零</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="c1"># 反向传播</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># 打印 w5、w7、w1 的梯度值</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">linear1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="c1"># tensor([[0.0004, 0.0009],</span>
+    <span class="c1">#         [0.0005, 0.0010]])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">linear2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="c1"># tensor([[ 0.0822,  0.0827],</span>
+    <span class="c1">#         [-0.0226, -0.0227]])</span>
+
+    <span class="c1"># 打印网络参数</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
+    <span class="c1"># OrderedDict([(&#39;linear1.weight&#39;, tensor([[0.1498, 0.1996], [0.2498, 0.2995]])),</span>
+    <span class="c1">#              (&#39;linear1.bias&#39;, tensor([0.3456, 0.3450])),</span>
+    <span class="c1">#              (&#39;linear2.weight&#39;, tensor([[0.3589, 0.4087], [0.5113, 0.5614]])),</span>
+    <span class="c1">#              (&#39;linear2.bias&#39;, tensor([0.5308, 0.6190]))])</span>
+</code></pre></div>
+<h3 id="3">3 小结<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>本小节主要学习了神经网络中最重要的反向传播(BP)算法，该算法通过链式求导的方法来计算神经网络中的各个权重参数的梯度，从而使用梯度下降算法来更新网络参数。</p>
+<h2 id="2-">2 梯度下降-梯度优化方法<a class="headerlink" href="#2-" title="Permanent link">&para;</a></h2>
+<h3 id="_2">学习目标<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>知道常见优化方法的问题及解决方案</li>
+</ul>
+<hr />
+<p>传统的梯度下降优化算法中，可能会碰到以下情况：</p>
+<p>碰到平缓区域，梯度值较小，参数优化变慢
+碰到 “鞍点” ，梯度为 0，参数无法优化
+碰到局部最小值
+对于这些问题, 出现了一些对梯度下降算法的优化方法，例如：Momentum、AdaGrad、RMSprop、Adam 等.</p>
+<h3 id="1_2">1 指数加权平均<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h3>
+<p>我们最常见的算数平均指的是将所有数加起来除以数的个数，每个数的权重是相同的。加权平均指的是给每个数赋予不同的权重求得平均数。移动平均数，指的是计算最近邻的 N 个数来获得平均数。</p>
+<p>指数移动加权平均则是参考各数值，并且各数值的权重都不同，距离越远的数字对平均数计算的贡献就越小（权重较小），距离越近则对平均数的计算贡献就越大（权重越大）。</p>
+<p>比如：明天气温怎么样，和昨天气温有很大关系，而和一个月前的气温关系就小一些。</p>
+<p>计算公式可以用下面的式子来表示：</p>
+<p><img src='assets/37.png' /></p>
+<ol>
+<li>St 表示指数加权平均值;</li>
+<li>Yt 表示 t 时刻的值;</li>
+<li>β 调节权重系数，该值越大平均数越平缓。</li>
+</ol>
+<p>我们接下来通过一段代码来看下结果，我们随机产生进 30 天的气温数据：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="n">ELEMENT_NUMBER</span> <span class="o">=</span> <span class="mi">30</span>
+
+
+<span class="c1"># 1. 实际平均温度</span>
+<span class="k">def</span> <span class="nf">test01</span><span class="p">():</span>
+
+    <span class="c1"># 固定随机数种子</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># 产生30天的随机温度</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="n">ELEMENT_NUMBER</span><span class="p">,])</span> <span class="o">*</span> <span class="mi">10</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+
+    <span class="c1"># 绘制平均温度</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ELEMENT_NUMBER</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">temperature</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># 2. 指数加权平均温度</span>
+<span class="k">def</span> <span class="nf">test02</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
+
+    <span class="c1"># 固定随机数种子</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># 产生30天的随机温度</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="n">ELEMENT_NUMBER</span><span class="p">,])</span> <span class="o">*</span> <span class="mi">10</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+
+    <span class="n">exp_weight_avg</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+
+        <span class="c1"># 第一个元素的的 EWA 值等于自身</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">exp_weight_avg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># 第二个元素的 EWA 值等于上一个 EWA 乘以 β + 当前气氛乘以 (1-β)</span>
+        <span class="n">new_temp</span> <span class="o">=</span> <span class="n">exp_weight_avg</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">temp</span>
+        <span class="n">exp_weight_avg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_temp</span><span class="p">)</span>
+
+
+    <span class="n">days</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ELEMENT_NUMBER</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">exp_weight_avg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">temperature</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">test01</span><span class="p">()</span>
+    <span class="n">test02</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">test02</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)</span>
+</code></pre></div>
+<p>程序结果如下:</p>
+<p><img src='assets/38.png' style="zoom:50%;" /></p>
+<p><img src='assets/39.png' style="zoom:50%;" /></p>
+<p><img src='assets/40.png' style="zoom:50%;" /></p>
+<p>从程序运行结果可以看到：</p>
+<p>指数加权平均绘制出的气氛变化曲线更加平缓;
+β 的值越大，则绘制出的折线越加平缓;
+β 值一般默认都是 0.9</p>
+<h3 id="2-momentum">2 动量算法Momentum<a class="headerlink" href="#2-momentum" title="Permanent link">&para;</a></h3>
+<p>当梯度下降碰到 “峡谷” 、”平缓”、”鞍点” 区域时, 参数更新速度变慢. Momentum 通过指数加权平均法，累计历史梯度值，进行参数更新，越近的梯度值对当前参数更新的重要性越大。</p>
+<p><img src='assets/50.png' /></p>
+<p>梯度计算公式：Dt = β * St-1 + (1- β) * Dt</p>
+<ol>
+<li>St-1 表示历史梯度移动加权平均值</li>
+<li>wt 表示当前时刻的梯度值</li>
+<li>β 为权重系数</li>
+</ol>
+<p>咱们举个例子，假设：权重 β 为 0.9，例如：</p>
+<p>第一次梯度值：s1 = d1 = w1
+第二次梯度值：s2 = 0.9 * s1 + d2 * 0.1
+第三次梯度值：s3 = 0.9 * s2 + d3 * 0.1
+第四次梯度值：s4 = 0.9 * s3 + d4 * 0.1</p>
+<ol>
+<li>w 表示初始梯度</li>
+<li>d 表示当前轮数计算出的梯度值</li>
+<li>s 表示历史梯度值</li>
+</ol>
+<p>梯度下降公式中梯度的计算，就不再是当前时刻 t 的梯度值，而是历史梯度值的指数移动加权平均值。公式修改为：</p>
+<p><img src='assets/41.png' /></p>
+<p>那么，Monmentum 优化方法是如何一定程度上克服 “平缓”、”鞍点”、”峡谷” 的问题呢？</p>
+<p><img src='assets/42.png' /></p>
+<p>当处于鞍点位置时，由于当前的梯度为 0，参数无法更新。但是 Momentum 动量梯度下降算法已经在先前积累了一些梯度值，很有可能使得跨过鞍点。</p>
+<p>由于 mini-batch 普通的梯度下降算法，每次选取少数的样本梯度确定前进方向，可能会出现震荡，使得训练时间变长。Momentum 使用移动加权平均，平滑了梯度的变化，使得前进方向更加平缓，有利于加快训练过程。一定程度上有利于降低 “峡谷” 问题的影响。</p>
+<p>峡谷问题：就是会使得参数更新出现剧烈震荡.</p>
+<p>Momentum 算法可以理解为是对梯度值的一种调整，我们知道梯度下降算法中还有一个很重要的学习率，Momentum 并没有学习率进行优化。</p>
+<p>在pytorch中动量梯度优化法编程实践如下：</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dm02_GradientDescent_opt_Momentum</span><span class="p">():</span>
+
+    <span class="c1"># 1 初始化权重参数</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="c1"># 2 实例化优化方法：SGD 指定参数beta=0.9</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">w</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+    <span class="c1"># 3 第1次更新 计算梯度，并对参数进行更新</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;第1次: 梯度w.grad: </span><span class="si">%.10f</span><span class="s1">, 更新后的权重:</span><span class="si">%.10f</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span> <span class="p">)</span>
+   <span class="c1"># 4 第2次更新 计算梯度，并对参数进行更新</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;第2次: 梯度w.grad: </span><span class="si">%.10f</span><span class="s1">, 更新后的权重:</span><span class="si">%.10f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span> <span class="p">)</span>
+</code></pre></div>
+<p>结果显示</p>
+<div class="highlight"><pre><span></span><code><span class="n">第1次</span><span class="p">:</span> <span class="n">梯度w</span><span class="o">.</span><span class="n">grad</span><span class="p">:</span> <span class="mf">1.0000000000</span><span class="p">,</span> <span class="n">更新后的权重</span><span class="p">:</span><span class="mf">0.9900000095</span>
+<span class="n">第2次</span><span class="p">:</span> <span class="n">梯度w</span><span class="o">.</span><span class="n">grad</span><span class="p">:</span> <span class="mf">0.9900000095</span><span class="p">,</span> <span class="n">更新后的权重</span><span class="p">:</span><span class="mf">0.9711000323</span>
+</code></pre></div>
+<h3 id="3-adagrad">3 AdaGrad<a class="headerlink" href="#3-adagrad" title="Permanent link">&para;</a></h3>
+<p>AdaGrad 通过对不同的参数分量使用不同的学习率，AdaGrad 的学习率总体会逐渐减小，这是因为 AdaGrad 认为：在起初时，我们距离最优目标仍较远，可以使用较大的学习率，加快训练速度，随着迭代次数的增加，学习率逐渐下降。</p>
+<p>其计算步骤如下：</p>
+<ol>
+<li>初始化学习率 α、初始化参数 θ、小常数 σ = 1e-6</li>
+<li>初始化梯度累积变量 s = 0</li>
+<li>从训练集中采样 m 个样本的小批量，计算梯度 g</li>
+<li>累积平方梯度 s = s + g ⊙ g，⊙ 表示各个分量相乘</li>
+</ol>
+<p>学习率 α 的计算公式如下：</p>
+<p><img src='assets/43.png' /></p>
+<ol>
+<li>参数更新公式如下：</li>
+</ol>
+<p><img src='assets/44.png' /></p>
+<ol>
+<li>重复 2-7 步骤.</li>
+</ol>
+<p>AdaGrad 缺点是可能会使得学习率过早、过量的降低，导致模型训练后期学习率太小，较难找到最优解。</p>
+<p>在pytorch中AdaGrad优化法编程实践如下：</p>
+<div class="highlight"><pre><span></span><code><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">AdaGrad思想：修正学习率,进行梯度更新</span>
+<span class="sd">具体方法：累加梯度的平方和，来调整学习率随着训练次数的增加，越来越小</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span>  <span class="nf">dm03_GradientDescent_opt_AdaGrad</span><span class="p">():</span>
+
+    <span class="c1"># 1 初始化权重参数</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">w10</span> <span class="o">=</span> <span class="n">w</span>
+
+    <span class="c1"># 2 实例化优化方法：SGD 指定参数beta=0.9</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adagrad</span> <span class="p">([</span><span class="n">w</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="c1"># 3 第1次更新 计算梯度，并对参数进行更新</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;梯度w.grad: </span><span class="si">%.10f</span><span class="s1">, 更新后的权重:</span><span class="si">%.10f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+</code></pre></div>
+<p>结果显示</p>
+<div class="highlight"><pre><span></span><code><span class="n">梯度w</span><span class="o">.</span><span class="n">grad</span><span class="p">:</span> <span class="mf">1.0000000000</span><span class="p">,</span> <span class="n">更新后的权重</span><span class="p">:</span><span class="mf">0.9900000095</span>
+</code></pre></div>
+<h3 id="4-rmsprop">4 RMSProp<a class="headerlink" href="#4-rmsprop" title="Permanent link">&para;</a></h3>
+<p>RMSProp 优化算法是对 AdaGrad 的优化. 最主要的不同是，其使用指数移动加权平均梯度替换历史梯度的平方和。其计算过程如下：</p>
+<ol>
+<li>初始化学习率 α、初始化参数 θ、小常数 σ = 1e-6</li>
+<li>初始化参数 θ</li>
+<li>初始化梯度累计变量 s</li>
+<li>从训练集中采样 m 个样本的小批量，计算梯度 g</li>
+<li>使用指数移动平均累积历史梯度，公式如下：</li>
+</ol>
+<p><img src='assets/45.png' /></p>
+<ol>
+<li>学习率 α 的计算公式如下：</li>
+</ol>
+<p><img src='assets/46.png' /></p>
+<ol>
+<li>参数更新公式如下：</li>
+</ol>
+<p><img src='assets/47.png' /></p>
+<p>RMSProp 与 AdaGrad 最大的区别是对梯度的累积方式不同，对于每个梯度分量仍然使用不同的学习率。</p>
+<p>RMSProp 通过引入衰减系数 β，控制历史梯度对历史梯度信息获取的多少. 被证明在神经网络非凸条件下的优化更好，学习率衰减更加合理一些。</p>
+<p>需要注意的是：AdaGrad 和 RMSProp 都是对于不同的参数分量使用不同的学习率，如果某个参数分量的梯度值较大，则对应的学习率就会较小，如果某个参数分量的梯度较小，则对应的学习率就会较大一些</p>
+<p>在pytorch中RMSprop梯度优化法，编程实践如下：</p>
+<div class="highlight"><pre><span></span><code><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">1 为什么使用RMSprop</span>
+<span class="sd">    AdaGrad算法在迭代后期由于学习率过小,能较难找到最优解  </span>
+<span class="sd">    使用梯度平方的加权平均，来修正学习率</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span>  <span class="nf">dm04_GradientDescent_opt_RMSprop</span><span class="p">():</span>
+    <span class="c1"># 1 初始化权重参数</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">w10</span> <span class="o">=</span> <span class="n">w</span>
+
+    <span class="c1"># 2 实例化优化方法：SGD 指定参数beta=0.9</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">([</span><span class="n">w</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="c1"># 3 第1次更新 计算梯度，并对参数进行更新</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;梯度w.grad: </span><span class="si">%.10f</span><span class="s1">, 更新后的权重:</span><span class="si">%.10f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+</code></pre></div>
+<p>结果显示</p>
+<div class="highlight"><pre><span></span><code><span class="n">梯度w</span><span class="o">.</span><span class="n">grad</span><span class="p">:</span> <span class="mf">1.0000000000</span><span class="p">,</span> <span class="n">更新后的权重</span><span class="p">:</span><span class="mf">0.9000000358</span>
+</code></pre></div>
+<h3 id="5-adam">5 Adam<a class="headerlink" href="#5-adam" title="Permanent link">&para;</a></h3>
+<p>Momentum 使用指数加权平均计算当前的梯度值、AdaGrad、RMSProp 使用自适应的学习率，Adam 结合了 Momentum、RMSProp 的优点，使用：移动加权平均的梯度和移动加权平均的学习率。使得能够自适应学习率的同时，也能够使用 Momentum 的优点。</p>
+<p>在pytroch中，Adam梯度优化法编程实践如下：</p>
+<div class="highlight"><pre><span></span><code><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">Adam优化算法（Adaptive Moment Estimation，自适应矩估计）将 Momentum 和 RMSProp 算法结合在一起。</span>
+<span class="s1">1.修正梯度: 使⽤梯度 的 指数加权平均</span>
+<span class="s1">2.修正学习率: 使⽤梯度平⽅ 的 指数加权平均</span>
+<span class="s1">def dm05_GradientDescent_opt_Adam():</span>
+<span class="s1">    # 1 初始化权重参数</span>
+<span class="s1">    w = torch.tensor([1.0], requires_grad=True, dtype=torch.float32)</span>
+<span class="s1">    y = (w ** 2) / 2.0</span>
+<span class="s1">    z = y.sum()</span>
+
+
+<span class="s1">    # 2 实例化优化方法：SGD 指定参数beta=0.9</span>
+<span class="s1">    optimizer = optim.Adam([w], lr=0.01)</span>
+
+<span class="s1">    # 3 第1次更新 计算梯度，并对参数进行更新</span>
+<span class="s1">    optimizer.zero_grad()</span>
+<span class="s1">    z.backward()</span>
+<span class="s1">    optimizer.step()</span>
+
+<span class="s1">    print(&#39;Adam: 梯度w.grad: </span><span class="si">%.10f</span><span class="s1">, 更新后的权重:</span><span class="si">%.10f</span><span class="s1">&#39; % (w.grad.numpy(), w.detach().numpy()))</span>
+
+<span class="s1">    # 4 第2次更新 计算梯度，并对参数进行更新</span>
+<span class="s1">    y = (w ** 2) / 2.0</span>
+<span class="s1">    z = y.sum()</span>
+<span class="s1">    optimizer.zero_grad()</span>
+<span class="s1">    z.backward()</span>
+<span class="s1">    optimizer.step()</span>
+<span class="s1">    print(&#39;Adam2: 梯度w.grad: </span><span class="si">%.10f</span><span class="s1">, 更新后的权重:</span><span class="si">%.10f</span><span class="s1">&#39; % (w.grad.numpy(), w.detach().numpy()))</span>
+</code></pre></div>
+<p>结果显示：</p>
+<div class="highlight"><pre><span></span><code><span class="n">梯度w</span><span class="o">.</span><span class="n">grad</span><span class="p">:</span> <span class="mf">1.0000000000</span><span class="p">,</span> <span class="n">更新后的权重</span><span class="p">:</span><span class="mf">0.9000000358</span>
+</code></pre></div>
+<h3 id="6">6 小结<a class="headerlink" href="#6" title="Permanent link">&para;</a></h3>
+<p>本小节主要学习了常见的一些对普通梯度下降算法的优化方法，主要有 Momentum、AdaGrad、RMSProp、Adam 等优化方法，其中 Momentum 使用指数加权平均参考了历史梯度，使得梯度值的变化更加平缓。AdaGrad 则是针对学习率进行了自适应优化，由于其实现可能会导致学习率下降过快，RMSProp 对 AdaGrad 的学习率自适应计算方法进行了优化，Adam 则是综合了 Momentum 和 RMSProp 的优点，在很多场景下，Adam 的表示都很不错。</p>
+<h2 id="3-">3 梯度下降-学习率优化策略<a class="headerlink" href="#3-" title="Permanent link">&para;</a></h2>
+<h3 id="1_3">1 为什么要进行学习率优化<a class="headerlink" href="#1_3" title="Permanent link">&para;</a></h3>
+<p>在训练神经网络时，一般情况下学习率都会随着训练而变化，这主要是由于，在神经网络训练的后期，如果学习率过高，会造成loss的振荡，但是如果学习率减小的过快，又会造成收敛变慢的情况。</p>
+<p>请运行下面代码，观察学习率设置不同对网络训练的影响</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># x看成是权重，y看成是loss，下面通过代码来理解学习率的作用</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x_t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x_t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># y = 4 x ^2</span>
+
+<span class="c1"># 采用较小的学习率，梯度下降的速度慢</span>
+<span class="c1"># 采用较大的学习率，梯度下降太快越过了最小值点，导致不收敛，甚至震荡</span>
+<span class="k">def</span> <span class="nf">dm01_learning_rate</span><span class="p">():</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># 记录loss迭代次数，画曲线</span>
+    <span class="n">iter_rec</span><span class="p">,</span> <span class="n">loss_rec</span><span class="p">,</span> <span class="n">x_rec</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">()</span>
+
+    <span class="c1"># 实验学习率： 0.01 0.02 0.03 0.1 0.2 0.3 0.4</span>
+    <span class="c1"># lr = 0.1    # 正常的梯度下降</span>
+    <span class="c1"># lr = 0.125      # 当学习率设置0.125 一下子求出一个最优解</span>
+                    <span class="c1"># x=0 y=0 在x=0处梯度等于0 x的值x=x-lr*x.grad就不用更新了</span>
+                    <span class="c1"># 后续再多少次迭代 都固定在最优点</span>
+
+    <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.2</span>      <span class="c1"># x从2.0一下子跨过0点，到了左侧负数区域</span>
+    <span class="c1"># lr = 0.3      # 梯度越来越大 梯度爆炸</span>
+    <span class="n">max_iteration</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iteration</span><span class="p">):</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>   <span class="c1"># 得出loss值</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># 计算x的梯度</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iter:</span><span class="si">{}</span><span class="s2">, X:</span><span class="si">{:8}</span><span class="s2">, X.grad:</span><span class="si">{:8}</span><span class="s2">, loss:</span><span class="si">{:10}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+
+        <span class="n">x_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>      <span class="c1"># 梯度下降点 列表</span>
+
+        <span class="c1"># 更新参数</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sub_</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>    <span class="c1"># x = x - x.grad</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+
+        <span class="n">iter_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>          <span class="c1"># 迭代次数 列表</span>
+        <span class="n">loss_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>          <span class="c1"># 损失值 列表</span>
+
+    <span class="c1"># 迭代次数-损失值 关系图</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">iter_rec</span><span class="p">,</span> <span class="n">loss_rec</span><span class="p">,</span> <span class="s1">&#39;-ro&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration X&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss value Y&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 函数曲线-下降轨迹 显示图</span>
+    <span class="n">x_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x_t</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_t</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;y = 4*x^2&quot;</span><span class="p">)</span>
+    <span class="n">y_rec</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x_rec</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x_rec---&gt;&#39;</span><span class="p">,</span> <span class="n">x_rec</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y_rec---&gt;&#39;</span><span class="p">,</span> <span class="n">y_rec</span><span class="p">)</span>
+
+    <span class="c1"># 指定线的颜色和样式（-ro：红色圆圈，b-：蓝色实线等）</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_rec</span><span class="p">,</span> <span class="n">y_rec</span><span class="p">,</span> <span class="s1">&#39;-ro&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>运行效果图如下：</p>
+<p><img alt="image-20220313172050673" src="assets/04-01.png" /></p>
+<p>可以看出：采用较小的学习率，梯度下降的速度慢；采用较大的学习率，梯度下降太快越过了最小值点，导致不收敛，甚至震荡。</p>
+<h3 id="2">2 梯度学习率调整策略<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<h4 id="21-_1">2.1 等间隔-调整学习率<a class="headerlink" href="#21-_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># lr_scheduler.StepLR(optimizer, step_size, gamma=0.1, last_epoch=-1)</span>
+<span class="c1"># 功能：等间隔-调整学习率</span>
+<span class="c1"># 参数：</span>
+<span class="c1">#   step_size：调整间隔数</span>
+<span class="c1">#   gamma：调整系数</span>
+<span class="c1">#   调整方式：lr = lr * gamma</span>
+
+<span class="k">def</span> <span class="nf">dm03_test_StepLR</span><span class="p">():</span>
+
+    <span class="n">LR</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 设置学习率初始化值为0.1</span>
+    <span class="n">iteration</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">max_epoch</span> <span class="o">=</span> <span class="mi">200</span>
+
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">1</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">weights</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="n">LR</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+    <span class="c1"># 设置学习率下降策略</span>
+    <span class="n">scheduler_lr</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="n">lr_list</span><span class="p">,</span> <span class="n">epoch_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_epoch</span><span class="p">):</span>
+        <span class="c1"># 获取当前lr，新版本用 get_last_lr()函数，旧版本用get_lr()函数，具体看UserWarning</span>
+        <span class="n">lr_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scheduler_lr</span><span class="o">.</span><span class="n">get_last_lr</span><span class="p">())</span>
+        <span class="n">epoch_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iteration</span><span class="p">):</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="n">weights</span> <span class="o">-</span> <span class="n">target</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="c1"># 更新下一个epoch的学习率</span>
+        <span class="n">scheduler_lr</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;epoch_list---&gt;&#39;</span><span class="p">,</span> <span class="n">epoch_list</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;lr_list---&gt;&#39;</span><span class="p">,</span> <span class="n">lr_list</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epoch_list</span><span class="p">,</span> <span class="n">lr_list</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Step LR Scheduler&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Learning rate&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>效果如下：</p>
+<p><img src="assets/04-02.png" alt="image-20220313172716591" style="zoom: 67%;" /></p>
+<h4 id="22-_1">2.2 指定间隔-调整学习率<a class="headerlink" href="#22-_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">lr_scheduler.MultiStepLR(optimizer, milestones, gamma=0.1, last_epoch=-1)</span>
+<span class="sd">功能：指定间隔-调整学习率</span>
+<span class="sd">主要参数：</span>
+<span class="sd">    milestones：设定调整时刻数</span>
+<span class="sd">    gamma：调整系数</span>
+<span class="sd">    调整方式：lr = lr * gamma</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">dm04_test_MultiStepLR</span><span class="p">():</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">LR</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">iteration</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">max_epoch</span> <span class="o">=</span> <span class="mi">200</span>
+
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">1</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;weights---&gt;&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="s1">&#39;target---&gt;&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">weights</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="n">LR</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+    <span class="c1"># 设定调整时刻数</span>
+    <span class="n">milestones</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">160</span><span class="p">]</span>
+    <span class="c1"># 设置学习率下降策略</span>
+    <span class="n">scheduler_lr</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">MultiStepLR</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">milestones</span><span class="o">=</span><span class="n">milestones</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="n">lr_list</span><span class="p">,</span> <span class="n">epoch_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_epoch</span><span class="p">):</span>
+
+        <span class="n">lr_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scheduler_lr</span><span class="o">.</span><span class="n">get_last_lr</span><span class="p">())</span>
+        <span class="n">epoch_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iteration</span><span class="p">):</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="n">weights</span> <span class="o">-</span> <span class="n">target</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="c1"># 更新下一个epoch的学习率</span>
+        <span class="n">scheduler_lr</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epoch_list</span><span class="p">,</span> <span class="n">lr_list</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Multi Step LR Scheduler</span><span class="se">\n</span><span class="s2">milestones:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">milestones</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Learning rate&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>效果如下：</p>
+<p><img src="assets/04-03.png" alt="image-20220313172915819" style="zoom: 67%;" /></p>
+<h4 id="23-">2.3 按指数衰减-调整学习率<a class="headerlink" href="#23-" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">lr_scheduler.ExponentialLR(optimizer, gamma, last_epoch=-1)</span>
+<span class="sd">功能：按指数衰减-调整学习率</span>
+<span class="sd">主要参数：</span>
+<span class="sd">    gamma：指数的底</span>
+<span class="sd">调整方式</span>
+<span class="sd">    lr= lr∗ gamma^epoch</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="k">def</span> <span class="nf">dm05_test_ExponentialLR</span><span class="p">():</span>
+
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">LR</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">iteration</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">max_epoch</span> <span class="o">=</span> <span class="mi">200</span>
+
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">1</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">weights</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="n">LR</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+    <span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.95</span>
+    <span class="n">scheduler_lr</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ExponentialLR</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">)</span>
+
+    <span class="n">lr_list</span><span class="p">,</span> <span class="n">epoch_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_epoch</span><span class="p">):</span>
+
+        <span class="n">lr_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scheduler_lr</span><span class="o">.</span><span class="n">get_last_lr</span><span class="p">())</span>
+        <span class="n">epoch_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iteration</span><span class="p">):</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="n">weights</span> <span class="o">-</span> <span class="n">target</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="n">scheduler_lr</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epoch_list</span><span class="p">,</span> <span class="n">lr_list</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exponential LR Scheduler</span><span class="se">\n</span><span class="s2">gamma:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gamma</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Learning rate&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>效果如下：</p>
+<p><img src="assets/04-04.png" alt="image-20220313173110595" style="zoom: 67%;" /></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="03-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 3 神经网络损失函数" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              3 神经网络损失函数
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="05-%E6%AD%A3%E5%88%99%E5%8C%96.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 5 神经网络正则化" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              5 神经网络正则化
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+        <script src="../js/extra.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>
